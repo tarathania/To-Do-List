@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+    <title>To-Do List</title>
+
+
+</head>
+
+<body>
+    <section class="hero is-white">
+        <div class="hero-body has-text-centered" style="padding-bottom: 1rem; margin: auto">
+            <h1 class="title is-sparta">TO-DO LIST</h1>
+            <h3 class="subtitle is-sparta">The List You Should do</h3>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="box" style="max-width: 480px; margin: auto">
+                <article class="media">
+                    <div class="media-content">
+                        <h1 class="has-text-centered">To-Do List</h1>
+                        <br>
+                        <ul>
+                            {% for task in tasks %}
+                            <li>
+                                - {{ task.title }}
+                                <a href="#" class="delete-btn" data-task-id="{{ task._id }}"
+                                    onclick="confirmDelete('{{ task._id }}')">Delete</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <br>
+                        <form action="{{ url_for('add_task') }}" class="has-text-centered" method="post">
+                            <label for="title">New Task:</label>
+                            <input type="text" id="title" name="title" required>
+                            <button type="submit">Add</button>
+                        </form>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="wrap">
+            <div>
+                <p>Nama saya Tara Thania Ananta, tinggal di Jakarta ID kegiatan MSIB saya adalah []</p>
+            </div>
+            <div>
+                <p>Hobby saya adalah:</p>
+                <ul>
+                    <li>Menggambar</li>
+                    <li>Membaca novel</li>
+                </ul>
+            </div>
+            <div>
+                <p>Kontak saya: 087886144778</p>
+                <p>IG : tarathaniaa</p>
+                <a href="">Email : anantathaniatara@gmail.com</a>
+            </div>
+        </div>
+        <p>&copy; 2023 To-Do List App</p>
+    </footer>
+
+    <script>
+        function confirmDelete(taskId) {
+            console.log('Function is executed');
+            const isConfirmed = confirm('Are you sure you want to delete this task?');
+
+            if (isConfirmed) {
+                window.location.href = `/delete/${taskId.toString()}`;
+            }
+        }
+    </script>
+</body>
+
+</html>
